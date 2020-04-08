@@ -33,6 +33,8 @@ void register_integrators(IntegratorMap& integrators)
 {
   // Register Brownian dynamics integrator with the integrators class factory
   integrators["brownian"] = factory<IntegratorBrownianPtr>();
+  // Register Brownian dynamics integrator with the integrators class factory
+  integrators["my_periodic_brownian"] = factory<IntegratorMyPeriodicBrownianPtr>();
   // Register Vicsek dynamics integrator with the integrators class factory
   integrators["vicsek"] = factory<IntegratorVicsekPtr>();
   // Register NVE integrator with the integrators class factory

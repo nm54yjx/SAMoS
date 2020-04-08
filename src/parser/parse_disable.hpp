@@ -60,6 +60,7 @@ public:
                   qi::as_string[keyword["nve"]][phx::bind(&DisableData::type, phx::ref(disable_data)) = qi::_1 ]           /*! Disables NVE integrator */
                   | qi::as_string[keyword["nvt"]][phx::bind(&DisableData::type, phx::ref(disable_data)) = qi::_1 ]         /*! Disables NVT integrator */
                   | qi::as_string[keyword["brownian"]][phx::bind(&DisableData::type, phx::ref(disable_data)) = qi::_1 ]    /*! Disables stochastic integrator */
+                  | qi::as_string[keyword["my_periodic_brownian"]][phx::bind(&DisableData::type, phx::ref(disable_data)) = qi::_1 ]    /*! Disables my periodicstochastic integrator */
                   | qi::as_string[keyword["vicsek"]][phx::bind(&DisableData::type, phx::ref(disable_data)) = qi::_1 ]      /*! Disables Vicsek integrator */
                   | qi::as_string[keyword["nematic"]][phx::bind(&DisableData::type, phx::ref(disable_data)) = qi::_1 ]     /*! Disables nematic integrator */
                   | qi::as_string[keyword["brownian_pos"]][phx::bind(&DisableData::type, phx::ref(disable_data)) = qi::_1 ]     /*! Disables brownian_pos integrator */

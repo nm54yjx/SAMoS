@@ -1,3 +1,7 @@
 build/
 *.pyc
 .*.swp
+doc/journal.pcbi.1005569.s020/*
+tmp/*
+.vscode/*
+SAMoS.code-workspace
