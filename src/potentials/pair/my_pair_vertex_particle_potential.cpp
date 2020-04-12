@@ -62,6 +62,23 @@ void MyPairVertexParticlePotential::compute(double dt)
     bool consider_edge_myosin_activity = false;
     bool consider_perim_myosin_activity = false;
     bool consider_cell_substrate_adhesion = true;
+    /*----------------------------------------SETTING PARAMETERS FIRST--------------------------------------------------*/
+    double stripe_width = 1.5;
+    double stripe_distance = 30.0;
+
+    double initial_xcoord = 49.5;
+    double symmetry_line_xcoord = -0.0;
+
+    bool IsSymmetric = false;
+
+    double adhesive_area_parameter = -15.0;
+
+    //double small_change = 0.01;
+    //double preferred_sample_dis = 0.002;
+    double small_change = 0.1;
+    double preferred_sample_dis = 0.02;
+
+    bool adhesive_area_parameter_can_change = false;
 
     double H_alpha = 2.0;
     double H_base = 0.0;
@@ -69,6 +86,7 @@ void MyPairVertexParticlePotential::compute(double dt)
     double H_Ps = 6.73;
     double H_KL = 1.0;
     double H_Ls = 6.73 / 6.0;
+    /*--------------------------   ----------- PARAMETERS SETTING DONE--------------------------------------------------*/
 
     if (m_mesh_update_steps > 0) if (m_system->get_step() % m_mesh_update_steps == 0) m_nlist->build_mesh();
 
@@ -189,39 +207,7 @@ void MyPairVertexParticlePotential::compute(double dt)
 
                 pot_eng += lambda * (r_nu - r_nu_m).len();
 
-                /*--------------------------------------Cell Area adhesion contribution STRAT---------------------------------------------*/
-                /*---------------------------------------------------148----678------------------------------------------------------------*/
-                /*----------------------------------------SETTING PARAMETERS FIRST--------------------------------------------------*/
-
-                double stripe_width = 5;
-                double stripe_distance = 30.0;
-
-                //double initial_xcoord = -45.0;
-                double initial_xcoord = 24.5;
-                double symmetry_line_xcoord = -0.0;
-
-                //bool IsSymmetric = true;
-                bool IsSymmetric = false;
-
-                double adhesive_area_parameter = -1.0;
-                //double adhesive_area_parameter = 0.0;
-
-                //double small_change = 0.02;
-                //double preferred_sample_dis = 0.004;
-
-                //double small_change = 0.01;
-                //double preferred_sample_dis = 0.002;
-
-                double small_change = 0.1;
-                double preferred_sample_dis = 0.02;
-
-                //double small_change = 0.2;
-                //double preferred_sample_dis = 0.04;
-
-                bool adhesive_area_parameter_can_change = false;
-                //bool adhesive_area_parameter_can_change = true;
-
-                /*--------------------------   ----------- PARAMETERS SETTING DONE--------------------------------------------------*/
+                /*--------------------------------------Cell Area adhesion contribution STRAT--------------------------------------*/
                 if (consider_cell_substrate_adhesion)
                 {
                     bool is_symm_counterpart = false;
@@ -731,7 +717,6 @@ void MyPairVertexParticlePotential::compute(double dt)
                     sub_adh_vec = sub_adh_vec + cross_pro_s; //pay attention to the +/- sign
                     //END OF MY CALCULATIONS: substrate adhesion force rising from face f
                 }
-                /*-----------------------------------------------------------------------------------------------------------------------*/
                 /*--------------------------------------Cell Area adhesion contribution END---------------------------------------------*/
 
             } // end of "for (int f = 0; f < vi.n_faces; f++)"
@@ -766,7 +751,7 @@ void MyPairVertexParticlePotential::compute(double dt)
              */
 
             // add potential energy
-            m_potential_energy += pot_eng;
+            m_potential_energy += pot_eng; // Remember to add substrate adhesion potential later
         }
         // ##############Now check neighbours#############
         for (int j = 0; j < vi.n_edges; j++)
